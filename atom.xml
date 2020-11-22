@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhongyi070622.github.io</id>
-    <title>Gridea</title>
-    <updated>2020-11-22T09:33:59.464Z</updated>
+    <title>DLTK的个人博客~</title>
+    <updated>2020-11-22T09:40:04.602Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhongyi070622.github.io"/>
     <link rel="self" href="https://zhongyi070622.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://zhongyi070622.github.io/images/avatar.png</logo>
     <icon>https://zhongyi070622.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Gridea</rights>
+    <rights>All rights reserved 2020, DLTK的个人博客~</rights>
     <entry>
         <title type="html"><![CDATA[Hello World!]]></title>
         <id>https://zhongyi070622.github.io/post/hello-world/</id>
