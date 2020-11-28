@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Gridea | DLTK的个人博客~</title>
+<title>题解 CF616B 【Dinner with Emma】 | DLTK的个人博客~</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,7 +18,11 @@
 
 
 
-    <meta name="description" content="温故而知新">
+    <meta name="description" content="翻译者来水一发题解~
+啊这，我翻译已经够清楚了吧，Emma要让餐费尽可能高，而Jack为了让餐费变低，会选择街上餐馆费用最小值，所以Emma会选择餐费最小值最高的街道，所以就是每一行最小值的最大值。
+代码如下：
+#include &lt;i..." />
+    <meta name="keywords" content="洛谷题解" />
   </head>
   <body>
     <div id="app" class="main">
@@ -88,35 +92,58 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Gridea</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://zhongyi070622.github.io/post/hello-gridea/">
-                  <h2 class="post-title">Hello Gridea</h2>
-                </a>
-                <div class="post-date">
-                  2018-12-12
-                </div>
-                <div class="post-abstract">
-                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+          <div class="post-detail">
+            <h2 class="post-title">题解 CF616B 【Dinner with Emma】</h2>
+            <div class="post-date">2020-11-28</div>
+            
+            <div class="post-content" v-pre>
+              <h3 id="翻译者来水一发题解~"><s>翻译者来水一发题解</s>~</h3>
+<p>啊这，我翻译已经够清楚了吧，Emma要让餐费尽可能高，而Jack为了让餐费变低，会选择街上餐馆费用最小值，所以Emma会选择餐费最小值最高的街道，所以就是每一行最小值的最大值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int n, m;
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    int ans = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int powmin = 0x3f3f3f3f;
+        for (int j = 0; j &lt; m; j++) {
+            int x;
+            cin &gt;&gt; x;
+            powmin = min(powmin, x);
+        }
+        ans = max(ans, powmin);
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
 
-                </div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://zhongyi070622.github.io/tag/solution-for-lg/" class="tag">
+                    洛谷题解
+                  </a>
+                
               </div>
-              
-                <a class="right" href="https://zhongyi070622.github.io/post/hello-gridea/">
-                  <div class="feature-container" style="background-image: url('https://zhongyi070622.github.io/post-images/hello-gridea.png')">
-                  </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zhongyi070622.github.io/post/solution-cf731a/">
+                  <h3 class="post-title">
+                    题解 CF731A 【Night at the Museum】
+                  </h3>
                 </a>
-              
-            </article>
-          
+              </div>
+            
 
-          <div class="pagination-container">
-  
-  
-</div>
+            
+
+          </div>
 
         </div>
       </div>

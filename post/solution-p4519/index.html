@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Hello Gridea | DLTK的个人博客~</title>
+<title>题解 P4519 【[COCI2017-2018 Contest4]Rasvjeta 】 | DLTK的个人博客~</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,15 +18,11 @@
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="这是道难题。
+因为没有翻译。
+大致题意见题解区。
+我就直接来讲做法吧：先按照题目给出的灯的位置进行标记，然后从前到后依次遍历路的位置，找到第一个没有灯照亮的区间，贪心，给它装上灯，并且使这个灯的位置尽量靠后（确保不浪费照亮范围），累加答案，..." />
+    <meta name="keywords" content="洛谷题解" />
   </head>
   <body>
     <div id="app" class="main">
@@ -97,45 +93,67 @@ Gridea 主页
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Hello Gridea</h2>
-            <div class="post-date">2018-12-12</div>
-            
-              <div class="feature-container" style="background-image: url('https://zhongyi070622.github.io/post-images/hello-gridea.png')">
-              </div>
+            <h2 class="post-title">题解 P4519 【[COCI2017-2018 Contest4]Rasvjeta 】</h2>
+            <div class="post-date">2020-11-28</div>
             
             <div class="post-content" v-pre>
-              <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+              <h3 id="这是道难题"><s>这是道难题。</s></h3>
+<h3 id="因为没有翻译"><s>因为没有翻译。</s></h3>
+<p>大致题意见题解区。</p>
+<p>我就直接来讲做法吧：先按照题目给出的灯的位置进行标记，然后<strong>从前到后</strong>依次遍历路的位置，找到第一个没有灯照亮的区间，<strong>贪心</strong>，给它装上灯，并且<strong>使这个灯的位置尽量靠后</strong>（确保<strong>不浪费照亮范围</strong>），累加答案，最后输出即可。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+using namespace std;
+const int MAX = 1005;
+int ans;
+int n, m, k;
+bool flag[MAX];
+void work(int x) { //标记照亮部分
+	for (int i = max(x - k, 1); i &lt;= min(n, x + k); i++) { 
+	    //防止越界（小心RE）
+		flag[i] = true;
+	}
+}
+int main() {
+	cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+	for (int i = 1; i &lt;= m; i++) { //读入并标记
+	    int x;
+	    cin &gt;&gt; x;
+	    work(x);
+	}
+	for (int i = 1; i &lt;= n; i++) { //贪心
+	    if (!flag[i]) {
+	        work(i + k); //标记（这里i+k是让灯尽量靠后，见上面解法）
+	        ans++; //累加答案
+	    }
+	}
+	cout &lt;&lt; ans &lt;&lt; endl; //输出
+	return 0;
+}
+</code></pre>
+<h3 id="完结撒花~">完结撒花～</h3>
+<h4 id="这么认真不留下个赞再走嘛~"><s>这么认真不留下个赞再走嘛～</s></h4>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://zhongyi070622.github.io/tag/RCc5hlwWN/" class="tag">
-                    Gridea
+                  <a href="https://zhongyi070622.github.io/tag/solution-for-lg/" class="tag">
+                    洛谷题解
                   </a>
                 
               </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zhongyi070622.github.io/post/solution-sp4300/">
+                  <h3 class="post-title">
+                    题解 SP4300 【AE00 - Rectangles】
+                  </h3>
+                </a>
+              </div>
             
 
             

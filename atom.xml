@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhongyi070622.github.io</id>
     <title>DLTK的个人博客~</title>
-    <updated>2020-11-28T09:16:53.747Z</updated>
+    <updated>2020-11-28T09:28:16.144Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhongyi070622.github.io"/>
     <link rel="self" href="https://zhongyi070622.github.io/atom.xml"/>
@@ -11,9 +11,238 @@
     <icon>https://zhongyi070622.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, DLTK的个人博客~</rights>
     <entry>
+        <title type="html"><![CDATA[题解 CF616B 【Dinner with Emma】]]></title>
+        <id>https://zhongyi070622.github.io/post/solution-cf616b/</id>
+        <link href="https://zhongyi070622.github.io/post/solution-cf616b/">
+        </link>
+        <updated>2020-11-28T09:27:29.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="翻译者来水一发题解~"><s>翻译者来水一发题解</s>~</h3>
+<p>啊这，我翻译已经够清楚了吧，Emma要让餐费尽可能高，而Jack为了让餐费变低，会选择街上餐馆费用最小值，所以Emma会选择餐费最小值最高的街道，所以就是每一行最小值的最大值。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int n, m;
+int main() {
+    cin &gt;&gt; n &gt;&gt; m;
+    int ans = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int powmin = 0x3f3f3f3f;
+        for (int j = 0; j &lt; m; j++) {
+            int x;
+            cin &gt;&gt; x;
+            powmin = min(powmin, x);
+        }
+        ans = max(ans, powmin);
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 CF731A 【Night at the Museum】]]></title>
+        <id>https://zhongyi070622.github.io/post/solution-cf731a/</id>
+        <link href="https://zhongyi070622.github.io/post/solution-cf731a/">
+        </link>
+        <updated>2020-11-28T09:24:21.000Z</updated>
+        <content type="html"><![CDATA[<p><s>又来一道大水题</s></p>
+<p>因为字符串必须从前往后打，所以顺序确定了，没什么好思考的，直接模拟就好。</p>
+<p>这里有个小技巧：可以用字符类型代替int类型进行运算，免去了计算环形位数的步骤。</p>
+<p>具体思路用 <code>pos</code> 变量记录当前字母，初始设为 'a'，然后计算比较顺时针和逆时针方向转动距离的大小，累加到 <code>ans</code> 变量中即可。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+string s;
+char pos;
+int ans;
+int main() {
+    pos = 'a';
+    cin &gt;&gt; s;
+    for (int i = 0; i &lt; s.size(); i++) {
+        ans += min(abs(pos - s[i]), 26 - abs(pos - s[i]));
+        pos = s[i];
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<h4 id="就这些了完结撒花~">就这些了，完结撒花～</h4>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 CF416A 【Guess a number!】]]></title>
+        <id>https://zhongyi070622.github.io/post/solution-cf416a/</id>
+        <link href="https://zhongyi070622.github.io/post/solution-cf416a/">
+        </link>
+        <updated>2020-11-28T09:22:44.000Z</updated>
+        <content type="html"><![CDATA[<p><s>有点水，不过不告诉你我WA了5次</s></p>
+<p>思路很简单，但逻辑一定要理清，尤其注意：当结果为 <code>N</code> 的时候对上下界的更新（要取反）。</p>
+<p>其实就是根据输入在线更新取值的上界和下界了啦。</p>
+<p>具体情况：</p>
+<p>(1) 当 <code>Y</code> 时：</p>
+<ol>
+<li>
+<p><code>&gt;=</code> 更新下界</p>
+</li>
+<li>
+<p><code>&gt;</code> 更新下界</p>
+</li>
+<li>
+<p><code>&lt;=</code> 更新上界</p>
+</li>
+<li>
+<p><code>&lt;</code> 更新上界</p>
+</li>
+</ol>
+<p>(2) 当 <code>N</code> 时：</p>
+<ol>
+<li>
+<p><code>&gt;=</code> 更新上界(等价于 <code>&lt;</code>)</p>
+</li>
+<li>
+<p><code>&gt;</code> 更新上界(等价于 <code>&lt;=</code>)</p>
+</li>
+<li>
+<p><code>&lt;=</code> 更新下界(等价于 <code>&gt;</code>)</p>
+</li>
+<li>
+<p><code>&lt;</code> 更新下界(等价于 <code>&gt;=</code>)</p>
+</li>
+</ol>
+<p>好了，给一下代码：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int lb = -0x3f3f3f3f, ub = 0x3f3f3f3f; //注意这里为了考虑负数，初始值设为正（负）无穷
+int n;
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        string s; cin &gt;&gt; s; int x; cin &gt;&gt; x; char c; cin &gt;&gt; c;
+        //上面这句都是输入，压一下行
+        if (s == &quot;&gt;=&quot;) {
+            if (c == 'Y') {
+                lb = max(lb, x); //(1)1
+            } else {
+                ub = min(ub, x - 1); //(2)1
+            }
+        }
+        if (s == &quot;&gt;&quot;) {
+            if (c == 'Y') {
+                lb = max(lb, x + 1); //(1)2
+            } else {
+                ub = min(ub, x); //(2)2
+            }
+        }
+        if (s == &quot;&lt;=&quot;) {
+            if (c == 'Y') {
+                ub = min(ub, x); //(1)3
+            } else {
+                lb = max(lb, x + 1); //(2)3
+            }
+        }
+        if (s == &quot;&lt;&quot;) {
+            if (c == 'Y') {
+                ub = min(ub, x - 1); //(1)4
+            } else {
+                lb = max(lb, x); //(2)4
+            }
+        }
+        //上面一段分别更新
+    }
+    if (lb &lt;= ub) cout &lt;&lt; lb &lt;&lt; endl;
+    else cout &lt;&lt; &quot;Impossible&quot; &lt;&lt; endl; //输出结果（记得还有Impossible的情况）
+    return 0;
+}
+</code></pre>
+<h4 id="完结撒花~">完结撒花～</h4>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 CF667A 【Pouring Rain】]]></title>
+        <id>https://zhongyi070622.github.io/post/solution-cf667a/</id>
+        <link href="https://zhongyi070622.github.io/post/solution-cf667a/">
+        </link>
+        <updated>2020-11-28T09:21:51.000Z</updated>
+        <content type="html"><![CDATA[<p><s>哇哇哇这题目单位。。。还好加粗了</s></p>
+<p>注意，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 是<strong>毫升每秒</strong>！！！</p>
+<p>一开始先把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 转换单位（为计算方便转成<strong>厘米每秒</strong>）：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mn>1</mn><mo>=</mo><mi>v</mi><mi mathvariant="normal">/</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">v1=v/s
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">/</span><span class="mord mathdefault">s</span></span></span></span></span></p>
+<p>若 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mn>1</mn><mo>&lt;</mo><mi>e</mi></mrow><annotation encoding="application/x-tex">v1 &lt; e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span> 就输出 <code>NO</code>。</p>
+<p>否则输出 <code>YES</code> 和秒数</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi mathvariant="normal">/</mi><mo>(</mo><mi>v</mi><mn>1</mn><mo>−</mo><mi>e</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">h/(v1 - e)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mord">/</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">e</span><span class="mclose">)</span></span></span></span></span></p>
+<p>即可（此处 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mn>1</mn><mo>−</mo><mi>e</mi></mrow><annotation encoding="application/x-tex">v1 - e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span> 是一秒减少的<strong>高度</strong>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi></mrow><annotation encoding="application/x-tex">h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span></span></span></span> 为原始高度）。</p>
+<p>代码如下，简单明了：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cmath&gt; //acos函数的库
+const double pi = acos(-1.0); //pi的标准求法
+using namespace std;
+double d, h, v, e;
+int main() {
+    cin &gt;&gt; d &gt;&gt; h &gt;&gt; v &gt;&gt; e;
+    v = v / ((d / 2) * (d / 2) * pi); //单位转换，自己更新
+    if (v &lt;= e) {
+        cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+    } else {
+        double ans = h / (v - e); //答案
+        cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl &lt;&lt; ans &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 P4519 【[COCI2017-2018 Contest4]Rasvjeta 】]]></title>
+        <id>https://zhongyi070622.github.io/post/solution-p4519/</id>
+        <link href="https://zhongyi070622.github.io/post/solution-p4519/">
+        </link>
+        <updated>2020-11-28T09:21:07.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="这是道难题"><s>这是道难题。</s></h3>
+<h3 id="因为没有翻译"><s>因为没有翻译。</s></h3>
+<p>大致题意见题解区。</p>
+<p>我就直接来讲做法吧：先按照题目给出的灯的位置进行标记，然后<strong>从前到后</strong>依次遍历路的位置，找到第一个没有灯照亮的区间，<strong>贪心</strong>，给它装上灯，并且<strong>使这个灯的位置尽量靠后</strong>（确保<strong>不浪费照亮范围</strong>），累加答案，最后输出即可。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+using namespace std;
+const int MAX = 1005;
+int ans;
+int n, m, k;
+bool flag[MAX];
+void work(int x) { //标记照亮部分
+	for (int i = max(x - k, 1); i &lt;= min(n, x + k); i++) { 
+	    //防止越界（小心RE）
+		flag[i] = true;
+	}
+}
+int main() {
+	cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+	for (int i = 1; i &lt;= m; i++) { //读入并标记
+	    int x;
+	    cin &gt;&gt; x;
+	    work(x);
+	}
+	for (int i = 1; i &lt;= n; i++) { //贪心
+	    if (!flag[i]) {
+	        work(i + k); //标记（这里i+k是让灯尽量靠后，见上面解法）
+	        ans++; //累加答案
+	    }
+	}
+	cout &lt;&lt; ans &lt;&lt; endl; //输出
+	return 0;
+}
+</code></pre>
+<h3 id="完结撒花~">完结撒花～</h3>
+<h4 id="这么认真不留下个赞再走嘛~"><s>这么认真不留下个赞再走嘛～</s></h4>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[题解 SP4300 【AE00 - Rectangles】]]></title>
-        <id>https://zhongyi070622.github.io/post/ti-jie-sp4300-ae00-rectangles/</id>
-        <link href="https://zhongyi070622.github.io/post/ti-jie-sp4300-ae00-rectangles/">
+        <id>https://zhongyi070622.github.io/post/solution-sp4300/</id>
+        <link href="https://zhongyi070622.github.io/post/solution-sp4300/">
         </link>
         <updated>2020-11-28T09:13:42.000Z</updated>
         <content type="html"><![CDATA[<p><s>偶见一道水题</s></p>

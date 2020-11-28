@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>题解 CF416A 【Guess a number!】 | DLTK的个人博客~</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zhongyi070622.github.io/favicon.ico?v=1606555691090">
+<link rel="stylesheet" href="https://zhongyi070622.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="有点水，不过不告诉你我WA了5次
+思路很简单，但逻辑一定要理清，尤其注意：当结果为 N 的时候对上下界的更新（要取反）。
+其实就是根据输入在线更新取值的上界和下界了啦。
+具体情况：
+(1) 当 Y 时：
+
+
+&gt;= 更新下界
+
+
+&gt..." />
+    <meta name="keywords" content="洛谷题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zhongyi070622.github.io">
+        <img src="https://zhongyi070622.github.io/images/avatar.png?v=1606555691090" class="site-logo">
+        <h1 class="site-title">DLTK的个人博客~</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zhongyi070622.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">题解 CF416A 【Guess a number!】</h2>
+            <div class="post-date">2020-11-28</div>
+            
+            <div class="post-content" v-pre>
+              <p><s>有点水，不过不告诉你我WA了5次</s></p>
+<p>思路很简单，但逻辑一定要理清，尤其注意：当结果为 <code>N</code> 的时候对上下界的更新（要取反）。</p>
+<p>其实就是根据输入在线更新取值的上界和下界了啦。</p>
+<p>具体情况：</p>
+<p>(1) 当 <code>Y</code> 时：</p>
+<ol>
+<li>
+<p><code>&gt;=</code> 更新下界</p>
+</li>
+<li>
+<p><code>&gt;</code> 更新下界</p>
+</li>
+<li>
+<p><code>&lt;=</code> 更新上界</p>
+</li>
+<li>
+<p><code>&lt;</code> 更新上界</p>
+</li>
+</ol>
+<p>(2) 当 <code>N</code> 时：</p>
+<ol>
+<li>
+<p><code>&gt;=</code> 更新上界(等价于 <code>&lt;</code>)</p>
+</li>
+<li>
+<p><code>&gt;</code> 更新上界(等价于 <code>&lt;=</code>)</p>
+</li>
+<li>
+<p><code>&lt;=</code> 更新下界(等价于 <code>&gt;</code>)</p>
+</li>
+<li>
+<p><code>&lt;</code> 更新下界(等价于 <code>&gt;=</code>)</p>
+</li>
+</ol>
+<p>好了，给一下代码：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int lb = -0x3f3f3f3f, ub = 0x3f3f3f3f; //注意这里为了考虑负数，初始值设为正（负）无穷
+int n;
+int main() {
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        string s; cin &gt;&gt; s; int x; cin &gt;&gt; x; char c; cin &gt;&gt; c;
+        //上面这句都是输入，压一下行
+        if (s == &quot;&gt;=&quot;) {
+            if (c == 'Y') {
+                lb = max(lb, x); //(1)1
+            } else {
+                ub = min(ub, x - 1); //(2)1
+            }
+        }
+        if (s == &quot;&gt;&quot;) {
+            if (c == 'Y') {
+                lb = max(lb, x + 1); //(1)2
+            } else {
+                ub = min(ub, x); //(2)2
+            }
+        }
+        if (s == &quot;&lt;=&quot;) {
+            if (c == 'Y') {
+                ub = min(ub, x); //(1)3
+            } else {
+                lb = max(lb, x + 1); //(2)3
+            }
+        }
+        if (s == &quot;&lt;&quot;) {
+            if (c == 'Y') {
+                ub = min(ub, x - 1); //(1)4
+            } else {
+                lb = max(lb, x); //(2)4
+            }
+        }
+        //上面一段分别更新
+    }
+    if (lb &lt;= ub) cout &lt;&lt; lb &lt;&lt; endl;
+    else cout &lt;&lt; &quot;Impossible&quot; &lt;&lt; endl; //输出结果（记得还有Impossible的情况）
+    return 0;
+}
+</code></pre>
+<h4 id="完结撒花~">完结撒花～</h4>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://zhongyi070622.github.io/tag/solution-for-lg/" class="tag">
+                    洛谷题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zhongyi070622.github.io/post/solution-cf667a/">
+                  <h3 class="post-title">
+                    题解 CF667A 【Pouring Rain】
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

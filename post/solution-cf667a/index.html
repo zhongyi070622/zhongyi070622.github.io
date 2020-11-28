@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>题解 CF667A 【Pouring Rain】 | DLTK的个人博客~</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zhongyi070622.github.io/favicon.ico?v=1606555691090">
+<link rel="stylesheet" href="https://zhongyi070622.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="哇哇哇这题目单位。。。还好加粗了
+注意，vvv 是毫升每秒！！！
+一开始先把 vvv 转换单位（为计算方便转成厘米每秒）：
+v1=v/sv1=v/s
+v1=v/s
+若 v1&lt;ev1 &lt; ev1&lt;e 就输出 NO。
+否则输出..." />
+    <meta name="keywords" content="洛谷题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zhongyi070622.github.io">
+        <img src="https://zhongyi070622.github.io/images/avatar.png?v=1606555691090" class="site-logo">
+        <h1 class="site-title">DLTK的个人博客~</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zhongyi070622.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">题解 CF667A 【Pouring Rain】</h2>
+            <div class="post-date">2020-11-28</div>
+            
+            <div class="post-content" v-pre>
+              <p><s>哇哇哇这题目单位。。。还好加粗了</s></p>
+<p>注意，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 是<strong>毫升每秒</strong>！！！</p>
+<p>一开始先把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span> 转换单位（为计算方便转成<strong>厘米每秒</strong>）：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mn>1</mn><mo>=</mo><mi>v</mi><mi mathvariant="normal">/</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">v1=v/s
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">/</span><span class="mord mathdefault">s</span></span></span></span></span></p>
+<p>若 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mn>1</mn><mo>&lt;</mo><mi>e</mi></mrow><annotation encoding="application/x-tex">v1 &lt; e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span> 就输出 <code>NO</code>。</p>
+<p>否则输出 <code>YES</code> 和秒数</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi><mi mathvariant="normal">/</mi><mo>(</mo><mi>v</mi><mn>1</mn><mo>−</mo><mi>e</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">h/(v1 - e)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mord">/</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">e</span><span class="mclose">)</span></span></span></span></span></p>
+<p>即可（此处 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mn>1</mn><mo>−</mo><mi>e</mi></mrow><annotation encoding="application/x-tex">v1 - e</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">e</span></span></span></span> 是一秒减少的<strong>高度</strong>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>h</mi></mrow><annotation encoding="application/x-tex">h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">h</span></span></span></span> 为原始高度）。</p>
+<p>代码如下，简单明了：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cmath&gt; //acos函数的库
+const double pi = acos(-1.0); //pi的标准求法
+using namespace std;
+double d, h, v, e;
+int main() {
+    cin &gt;&gt; d &gt;&gt; h &gt;&gt; v &gt;&gt; e;
+    v = v / ((d / 2) * (d / 2) * pi); //单位转换，自己更新
+    if (v &lt;= e) {
+        cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+    } else {
+        double ans = h / (v - e); //答案
+        cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl &lt;&lt; ans &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://zhongyi070622.github.io/tag/solution-for-lg/" class="tag">
+                    洛谷题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zhongyi070622.github.io/post/solution-p4519/">
+                  <h3 class="post-title">
+                    题解 P4519 【[COCI2017-2018 Contest4]Rasvjeta 】
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

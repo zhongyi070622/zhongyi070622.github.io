@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Gridea | DLTK的个人博客~</title>
+<title>题解 CF731A 【Night at the Museum】 | DLTK的个人博客~</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,7 +18,11 @@
 
 
 
-    <meta name="description" content="温故而知新">
+    <meta name="description" content="又来一道大水题
+因为字符串必须从前往后打，所以顺序确定了，没什么好思考的，直接模拟就好。
+这里有个小技巧：可以用字符类型代替int类型进行运算，免去了计算环形位数的步骤。
+具体思路用 pos 变量记录当前字母，初始设为 'a'，然后计算比较..." />
+    <meta name="keywords" content="洛谷题解" />
   </head>
   <body>
     <div id="app" class="main">
@@ -88,35 +92,58 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Gridea</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://zhongyi070622.github.io/post/hello-gridea/">
-                  <h2 class="post-title">Hello Gridea</h2>
-                </a>
-                <div class="post-date">
-                  2018-12-12
-                </div>
-                <div class="post-abstract">
-                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+          <div class="post-detail">
+            <h2 class="post-title">题解 CF731A 【Night at the Museum】</h2>
+            <div class="post-date">2020-11-28</div>
+            
+            <div class="post-content" v-pre>
+              <p><s>又来一道大水题</s></p>
+<p>因为字符串必须从前往后打，所以顺序确定了，没什么好思考的，直接模拟就好。</p>
+<p>这里有个小技巧：可以用字符类型代替int类型进行运算，免去了计算环形位数的步骤。</p>
+<p>具体思路用 <code>pos</code> 变量记录当前字母，初始设为 'a'，然后计算比较顺时针和逆时针方向转动距离的大小，累加到 <code>ans</code> 变量中即可。</p>
+<p>代码如下：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+string s;
+char pos;
+int ans;
+int main() {
+    pos = 'a';
+    cin &gt;&gt; s;
+    for (int i = 0; i &lt; s.size(); i++) {
+        ans += min(abs(pos - s[i]), 26 - abs(pos - s[i]));
+        pos = s[i];
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<h4 id="就这些了完结撒花~">就这些了，完结撒花～</h4>
 
-                </div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://zhongyi070622.github.io/tag/solution-for-lg/" class="tag">
+                    洛谷题解
+                  </a>
+                
               </div>
-              
-                <a class="right" href="https://zhongyi070622.github.io/post/hello-gridea/">
-                  <div class="feature-container" style="background-image: url('https://zhongyi070622.github.io/post-images/hello-gridea.png')">
-                  </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zhongyi070622.github.io/post/solution-cf416a/">
+                  <h3 class="post-title">
+                    题解 CF416A 【Guess a number!】
+                  </h3>
                 </a>
-              
-            </article>
-          
+              </div>
+            
 
-          <div class="pagination-container">
-  
-  
-</div>
+            
+
+          </div>
 
         </div>
       </div>
